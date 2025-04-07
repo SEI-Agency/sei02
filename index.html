@@ -19,21 +19,43 @@
       overflow-x: hidden;
     }
 
-    .fade-in {
-      animation: fadeIn 1.2s ease forwards;
-      opacity: 0;
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      z-index: 1001;
+      border-bottom: 2px solid #be3207;
     }
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
+    .menu-container {
+      display: flex;
+      gap: 15px;
+    }
+
+    .menu-toggle {
+      background-color: #1a1a1a;
+      border: 2px solid #be3207;
+      color: white;
+      font-size: 1rem;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+      background-color: #be3207;
+      transform: translateY(-2px);
     }
 
     .logo-section {
       background-color: white;
       text-align: center;
-      padding: 40px 20px;
+      padding: 120px 20px 40px;
     }
 
     .logo-section img {
@@ -60,59 +82,34 @@
       color: #ccc;
     }
 
-    .menu-container {
-      position: relative;
-      display: inline-block;
+    .info-container {
+      opacity: 0;
+      transition: opacity 2s ease;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.05rem;
+      color: #bbb;
+      max-width: 800px;
+      margin: auto;
     }
 
-    .menu-toggle {
-      background-color: #1a1a1a;
-      border: 2px solid #be3207;
-      color: white;
-      font-size: 1rem;
-      padding: 15px 25px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
+    .info-container.visible {
+      opacity: 1;
     }
 
-    .menu-toggle:hover {
-      background-color: #be3207;
-      transform: translateY(-2px);
+    .scroll-info-container {
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.05rem;
+      color: #aaa;
+      max-width: 800px;
+      margin: 60px auto 40px;
     }
 
-    .menu-options {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 60px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #1a1a1a;
-      border: 2px solid #be3207;
-      border-radius: 10px;
-      min-width: 220px;
-      z-index: 1000;
-    }
-
-    .menu-options button {
-      background: none;
-      border: none;
-      color: white;
-      padding: 12px 20px;
-      text-align: left;
-      cursor: pointer;
-      font-size: 1rem;
-      border-bottom: 1px solid #333;
-      transition: background 0.2s;
-    }
-
-    .menu-options button:last-child {
-      border-bottom: none;
-    }
-
-    .menu-options button:hover {
-      background-color: #be3207;
+    .scroll-info-container.visible {
+      opacity: 1;
     }
 
     .popup {
@@ -161,18 +158,6 @@
       cursor: pointer;
     }
 
-    @media (max-width: 500px) {
-      .main-content h1 {
-        font-size: 2rem;
-      }
-
-      .menu-options {
-        width: 90%;
-        left: 5%;
-        transform: none;
-      }
-    }
-
     .floating-phrase {
       position: fixed;
       font-size: 0.95rem;
@@ -191,42 +176,61 @@
       90% { opacity: 1; }
       100% { opacity: 0; transform: scale(1.02); }
     }
+
+    canvas#snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    #popupInvasor {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.95);
+}
+
   </style>
 </head>
 <body>
 
-  <!-- Seção da Logo -->
+  <header>
+    <div class="menu-container">
+      <button class="menu-toggle" onclick="window.location.href='login.html'">
+        <i class="fas fa-user-lock"></i> Acesso Restrito
+      </button>
+      <button class="menu-toggle" onclick="abrirPopup()">
+        <i class="fas fa-eye-slash"></i> Encontre-nos
+      </button>
+      <button class="menu-toggle" onclick="window.location.href='candidatos.html'">
+        <i class="fas fa-user-plus"></i> Candidatar-se
+      </button>
+    </div>
+  </header>
+
+  </div>
+  
   <div class="logo-section fade-in">
-    <img src="agencia.png" alt="Agência S.E.I.">
+    <h2 style="font-size: 2.5rem; color: #0f0f0f; text-shadow: 0 0 5px #be3207cc;">S.E.I.</h2>
+    <img src="agencia.png" alt="S.E.I.">
+    <p style="margin-top: 10px; font-size: 1.1rem; color: #333; text-shadow: 0 0 5px #be3207aa;">Observar, Analisar, Neutralizar</p>
   </div>
 
-  <!-- Conteúdo Principal -->
   <div class="main-content fade-in">
-    <h1>Bem-vindo à Agência S.E.I.</h1>
     <p>
       A <strong>S.E.I.</strong> — Serviço Estratégico de Inteligência — atua silenciosamente para monitorar, investigar e neutralizar ameaças de qualquer natureza. Agimos onde ninguém mais pode.
     </p>
-
-    <!-- Menu Dropdown -->
-    <div class="menu-container">
-      <button class="menu-toggle" onclick="toggleMenu()">
-        <i class="fas fa-bars"></i> Menu
-      </button>
-      <div class="menu-options" id="menuOptions">
-        <button onclick="window.location.href='login.html'">
-          <i class="fas fa-user-lock"></i> Acesso Restrito
-        </button>
-        <button onclick="abrirPopup()">
-          <i class="fas fa-eye-slash"></i> Encontre-nos
-        </button>
-        <button onclick="window.location.href='candidatos.html'">
-          <i class="fas fa-user-plus"></i> Candidatar-se
-        </button>
-      </div>
-    </div>
   </div>
 
-  <!-- Popup escondido -->
+  <div class="info-container" id="infoContainer"></div>
+
+  <!-- Nova seção que aparece ao rolar -->
+  <div class="scroll-info-container">
+    <p><strong>Diretor-Geral:</strong> ████████████</p>
+    <p><strong>Vice-Diretor:</strong> █████████████</p>
+    <p><strong>Fundação:</strong> 12 de Março de 2023</p>
+    <p><em>“Somos o que ninguém sabe que existe.”</em></p>
+  </div>
+
   <div class="popup" id="popup">
     <div class="popup-content">
       <p>Você não pode nos encontrar.<br><strong>Nós encontraremos você.</strong></p>
@@ -236,7 +240,21 @@
     </div>
   </div>
 
-  <!-- Scripts -->
+  <canvas id="snow"></canvas>
+
+  <div style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
+    <button id="toggleMusic" style="background-color: #1a1a1a; border: 2px solid #be3207; color: white; padding: 10px 15px; border-radius: 8px; font-size: 14px; cursor: pointer;">🔊 Tocar Música</button>
+  </div>
+  <audio id="bgMusic" loop>
+    <source src="Audio/mp3.mp3" type="audio/mp3">
+    Seu navegador não suporta áudio HTML5.
+  </audio>
+
+  <audio id="alertaInvasor">
+    <source src="Audio/alerta.mp3" type="audio/mp3">
+    Seu navegador não suporta áudio HTML5.
+  </audio>
+
   <script>
     function abrirPopup() {
       document.getElementById("popup").style.display = "flex";
@@ -244,11 +262,6 @@
 
     function fecharPopup() {
       document.getElementById("popup").style.display = "none";
-    }
-
-    function toggleMenu() {
-      const menu = document.getElementById("menuOptions");
-      menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
     }
 
     const frases = [
@@ -260,6 +273,12 @@
       "Confidencialidade acima de tudo.",
       "Respostas nas sombras, proteção na luz.",
       "Sua paz é nossa missão invisível.",
+      "A verdade é um luxo que poucos podem pagar.",
+      "Y3JlYXRlZCBieSBhYm9nYWRv",
+      "Q29kaWZpY2FuZG8gQXJxdWl2b3MuLi4=",
+      "U29tZXRpbWVzIG5lZWRlZCB0byBiZSB1c3VhbGx5IHN0b3JlZA==",
+      "QWx2byBlbmNvbnRyYWRvLi4gZW52aWFuZG8gYXRpcmFkb3JlcyBwYXJhIHBvc2nDp8OjbyA=",
+      "LSBFIHZvY8OqIGFjaGEgcXVlIGVsZXMgcG9kZW0gZGVjb2RpZmljYXIgbm9zc2FzIGZhbGFzPwoKLS0gdWgsIGNsYXJvIHF1ZSBuw6NvLi4="
     ];
 
     function criarFraseFlutuante() {
@@ -268,65 +287,206 @@
       el.className = "floating-phrase";
       el.textContent = frase;
 
-      const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-
-      const top = Math.random() * (vh - 100) + 20;
-      const left = Math.random() * (vw - 300) + 20;
-
-      el.style.top = `${top}px`;
-      el.style.left = `${left}px`;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      el.style.top = `${Math.random() * (vh - 100) + 20}px`;
+      el.style.left = `${Math.random() * (vw - 300) + 20}px`;
 
       document.body.appendChild(el);
-
-      setTimeout(() => {
-        el.remove();
-      }, 6000);
+      setTimeout(() => el.remove(), 6000);
     }
 
     setInterval(criarFraseFlutuante, 7000);
     criarFraseFlutuante();
+
+    setTimeout(() => {
+      const info = document.getElementById("infoContainer");
+      info.classList.add("visible");
+      info.innerHTML = `
+        <p>Operações secretas. Protocolos invisíveis. Agentes altamente treinados atuam nas sombras para garantir que ameaças sejam eliminadas antes que você perceba que existiram.</p>
+        <p><strong>Você não vê a S.E.I.</strong><br>Mas ela está sempre vendo você.</p>
+      `;
+    }, 2000);
+
+    const music = document.getElementById("bgMusic");
+    const btn = document.getElementById("toggleMusic");
+    let tocando = false;
+    btn.addEventListener("click", () => {
+      if (tocando) {
+        music.pause();
+        btn.textContent = "🔊 Tocar Música";
+      } else {
+        music.play();
+        btn.textContent = "🎵 Pausar Música";
+      }
+      tocando = !tocando;
+     
+    });
     
-  </script>
-  <!-- 🎵 Música de fundo com controle -->
-<div style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
-  <button id="toggleMusic" style="
-    background-color: #1a1a1a;
-    border: 2px solid #be3207;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  ">
-    🔊 Tocar Música
-  </button>
-</div>
 
-<audio id="bgMusic" loop>
-  <source src="Audio/mp3.mp3" type="audio/mp3">
-  Seu navegador não suporta áudio HTML5.
-</audio>
+    const canvas = document.getElementById('snow');
+    const ctx = canvas.getContext('2d');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
 
-<script>
-  const music = document.getElementById("bgMusic");
-  const btn = document.getElementById("toggleMusic");
+    const flakes = Array.from({ length: 100 }).map(() => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 3 + 1,
+      d: Math.random() * 1 + 0.5
+    }));
 
-  let tocando = false;
-
-  btn.addEventListener("click", () => {
-    if (tocando) {
-      music.pause();
-      btn.textContent = "🔊 Tocar Música";
-    } else {
-      music.play();
-      btn.textContent = "🎵 Pausar Música";
+    function drawSnow() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+      ctx.beginPath();
+      flakes.forEach(flake => {
+        ctx.moveTo(flake.x, flake.y);
+        ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2, true);
+      });
+      ctx.fill();
+      updateFlakes();
     }
-    tocando = !tocando;
+
+    function updateFlakes() {
+      flakes.forEach(flake => {
+        flake.y += flake.d;
+        if (flake.y > height) {
+          flake.y = 0;
+          flake.x = Math.random() * width;
+        }
+      });
+    }
+
+    setInterval(drawSnow, 30);
+    window.addEventListener('resize', () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    });
+
+    // Revelar info ao rolar
+    const scrollInfo = document.querySelector('.scroll-info-container');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          scrollInfo.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.4 });
+    observer.observe(scrollInfo);
+
+        // Easter Egg 1: Konami Code
+        const konamiCode = [38,38,40,40,37,39,37,39,66,65];
+    let konamiIndex = 0;
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === konamiCode[konamiIndex]) {
+        konamiIndex++;
+        if (konamiIndex === konamiCode.length) {
+          alert("🔐 Acesso ao Arquivo Ultra-Secreto liberado: CLASSIFICADO 🔒");
+          konamiIndex = 0;
+        }
+      } else {
+        konamiIndex = 0;
+      }
+    });
+
+
+
+
+    // Easter Egg 2: Clique repetido no título
+    let cliqueTitulo = 0;
+    document.querySelector(".logo-section h2").addEventListener("click", () => {
+      cliqueTitulo++;
+      if (cliqueTitulo === 5) {
+        alert("🧠 Você descobriu o 'Protocolo C'. Fique atento...");
+      }
+    });
+
+    document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  alert("⛔️ Você não tem autorização para investigar os arquivos da S.E.I.");
+});
+
+
+ 
+
+
+
+
+    // Easter Egg 4: Frase secreta no console
+    console.log("%cS.E.I. >> Transmissão interceptada. Código: XR-1947", "color: #be3207; font-size: 16px; font-weight: bold;");
+
+    // Easter Egg 5: Pressionar Ctrl + Shift + S
+    document.addEventListener("keydown", (e) => {
+      if (e.ctrlKey && e.shiftKey && e.code === "KeyS") {
+        const audio = new Audio("Audio/alerta.mp3");
+        audio.play();
+        alert("🔊 Sinal misterioso interceptado...");
+      }
+    });
+    function ativarPopupInvasor() {
+  const popup = document.getElementById('popupInvasor');
+  const audio = document.getElementById('alertaInvasor');
+  
+  popup.style.display = 'block';
+  audio.currentTime = 0;
+  audio.play();
+}
+
+function ativarPopupInvasor() {
+      const popup = document.getElementById('popupInvasor');
+      const audio = document.getElementById('alertaInvasor');
+      popup.style.display = 'block';
+      audio.currentTime = 0;
+      audio.play();
+    }
+
+    function fecharPopupInvasor() {
+      const popup = document.getElementById('popupInvasor');
+      const audio = document.getElementById('alertaInvasor');
+      popup.style.display = 'none';
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
+    let popupAtivado = false;
+
+    // Detectar F12 ou DevTools aberto
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'F12' && !popupAtivado) {
+        popupAtivado = true;
+        ativarPopupInvasor();
+      }
+    });
+
+    const detectDevTools = () => {
+      const devtools = /./;
+      devtools.toString = function () {
+        if (!popupAtivado) {
+          popupAtivado = true;
+          ativarPopupInvasor();
+        }
+        return '';
+      };
+      console.log(devtools);
+    };
+
+    setInterval(detectDevTools, 1000);
+
+    document.addEventListener("keydown", function (e) {
+    if (e.key === "F12" || e.keyCode === 123) {
+      e.preventDefault();
+      alert("⛔️ Você não tem autorização para investigar os arquivos da S.E.I.");
+      ativarPopupInvasor();
+    e.preventDefault();
+    }
   });
-</script>
 
 
+  </script>
 </body>
 </html>
