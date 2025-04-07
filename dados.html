@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Database Security Warning</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', Courier, monospace;
+      background-color: black;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    h1 {
+      color: darkred;
+      font-size: 4em;
+      margin: 0;
+    }
+
+    .sub-warning {
+      font-size: 1.2em;
+      color: #ff5555;
+      margin-top: 20px;
+      background-color: #111;
+      padding: 10px 20px;
+      border: 2px solid red;
+    }
+
+    .classified {
+      font-size: 5em;
+      color: darkred;
+      font-weight: bold;
+      margin: 20px 0;
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); opacity: 1; }
+      to { transform: scale(1.05); opacity: 0.8; }
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="alarm" autoplay loop>
+    <source src="Audio/alerta.mp3" type="audio/mp3">
+    Seu navegador não suporta áudio.
+  </audio>
+
+  <h1>⚠️ AVISO: S.E.I BANCO DE DADOS IS</h1>
+  <div class="classified">CLASSIFICADO</div>
+  <div class="sub-warning">PESSOAL NÃO AUTORIZADO SERÁ RASTREADO, LOCALIZADO E DETIDO</div>
+  <div class="sub-warning">INVASOR DETECTADO</div>
+
+  <script>
+    // Redirecionar após 10 segundos
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 10000);
+  </script>
+</body>
+</html>
