@@ -130,21 +130,21 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
   <script src="script.js"></script>
 
-  <script
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "F12" || e.keyCode === 123) {
+  <!-- Bloqueio de F12 e botão direito -->
+  <script>
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "F12" || e.keyCode === 123 || 
+          (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C" || e.key === "J")) || 
+          (e.ctrlKey && e.key === "U")) {
+        e.preventDefault();
+        alert("⛔️ Você não tem autorização para investigar os arquivos da S.E.I.");
+      }
+    });
+
+    document.addEventListener('contextmenu', function (e) {
       e.preventDefault();
       alert("⛔️ Você não tem autorização para investigar os arquivos da S.E.I.");
-      ativarPopupInvasor();
-    e.preventDefault();
-    }
-  });
-
-  document.addEventListener('contextmenu', function(e) {
-  e.preventDefault();
-  alert("⛔️ Você não tem autorização para investigar os arquivos da S.E.I.");
-        
-});
+    });
   </script>
 </body>
 </html>
