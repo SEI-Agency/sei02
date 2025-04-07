@@ -1,70 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Database Security Warning</title>
+  <title>Banco de Dados S.E.I</title>
   <style>
     body {
       margin: 0;
+      background: linear-gradient(145deg, #000000, #1a1a1a);
       font-family: 'Courier New', Courier, monospace;
-      background-color: black;
-      color: white;
+      color: #00ff00;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
       overflow: hidden;
       text-align: center;
     }
 
-    h1 {
-      color: darkred;
-      font-size: 4em;
-      margin: 0;
+    .terminal {
+      background-color: black;
+      border: 2px solid #00ff00;
+      padding: 30px;
+      width: 80%;
+      max-width: 800px;
+      box-shadow: 0 0 15px #00ff00;
     }
 
-    .sub-warning {
-      font-size: 1.2em;
-      color: #ff5555;
-      margin-top: 20px;
-      background-color: #111;
-      padding: 10px 20px;
-      border: 2px solid red;
+    .line {
+      display: none;
+      font-size: 1.1em;
+      margin: 10px 0;
     }
 
     .classified {
-      font-size: 5em;
-      color: darkred;
+      color: red;
+      font-size: 4em;
       font-weight: bold;
-      margin: 20px 0;
+      margin: 30px 0;
+      display: none;
       animation: pulse 1s infinite alternate;
     }
 
     @keyframes pulse {
       from { transform: scale(1); opacity: 1; }
-      to { transform: scale(1.05); opacity: 0.8; }
+      to { transform: scale(1.05); opacity: 0.7; }
     }
   </style>
 </head>
 <body>
 
-  <audio id="alarm" autoplay loop>
-    <source src="Audio/alerta.mp3" type="audio/mp3">
-    Seu navegador não suporta áudio.
-  </audio>
+<audio id="alarm" loop>
+  <source src="Audio/alerta.mp3" type="audio/mp3">
+  Seu navegador não suporta áudio.
+</audio>
 
-  <h1>⚠️ AVISO: S.E.I BANCO DE DADOS É</h1>
-  <div class="classified">CLASSIFICADO</div>
-  <div class="sub-warning">PESSOAL NÃO AUTORIZADO SERÁ RASTREADO, LOCALIZADO E DETIDO</div>
-  <div class="sub-warning">INVASOR DETECTADO</div>
+<div class="terminal">
+  <div class="line" id="linha1">INICIANDO CONEXÃO COM O BANCO DE DADOS...</div>
+  <div class="line" id="linha2">AUTENTICAÇÃO EM ANDAMENTO...</div>
+  <div class="line" id="linha3">ACESSO NEGADO - CREDENCIAIS INVÁLIDAS</div>
+  <div class="line" id="linha4">TENTATIVA DE ACESSO NÃO AUTORIZADO DETECTADA</div>
+  <div class="line" id="linha5">RASTREAMENTO EM CURSO...</div>
+  <div class="classified" id="alertaFinal">CLASSIFICADO</div>
+  <div class="line" id="linha6" style="color: red;">PESSOAL NÃO AUTORIZADO SERÁ RASTREADO, LOCALIZADO E DETIDO</div>
+</div>
 
-  <script>
-    // Redirecionar após 10 segundos
+<script>
+  const audio = document.getElementById('alarm');
+  const delays = [1000, 2500, 4000, 6000, 7500, 9000];
+
+  function mostrarLinha(id, delay) {
     setTimeout(() => {
-      window.location.href = "index.html";
-    }, 10000);
-  </script>
+      document.getElementById(id).style.display = 'block';
+    }, delay);
+  }
+
+  mostrarLinha("linha1", delays[0]);
+  mostrarLinha("linha2", delays[1]);
+  mostrarLinha("linha3", delays[2]);
+  mostrarLinha("linha4", delays[3]);
+  mostrarLinha("linha5", delays[4]);
+
+  setTimeout(() => {
+    document.getElementById("alertaFinal").style.display = 'block';
+    document.getElementById("linha6").style.display = 'block';
+    audio.play();
+  }, delays[5]);
+
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 15000);
+</script>
+
 </body>
 </html>
