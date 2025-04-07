@@ -182,6 +182,20 @@
         alert("Erro ao enviar solicitação.");
       }
     }
+
+        document.addEventListener("keydown", function (e) {
+    if (e.key === "F12" || e.keyCode === 123) {
+      e.preventDefault();
+      alert("⛔️ Você não tem autorização para investigar os arquivos da S.E.I.");
+      ativarPopupInvasor();
+    e.preventDefault();
+    }
+  });
+
+      document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  alert("⛔️ Você não tem autorização para investigar os arquivos da S.E.I.");
+});
   </script>
 </body>
 </html>
