@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Formulário de Candidatura | S.E.I.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: #fff;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .form-container {
+      background-color: #111;
+      border: 1px solid #ff0000;
+      padding: 30px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 15px #ff000044;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff4d4d;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #ff000033;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      background-color: #222;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #800000;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #aa0000;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Candidatura S.E.I.</h1>
+    <form id="candidaturaForm">
+      <label for="nick">Nick</label>
+      <input type="text" id="nick" name="nick" required />
+
+      <label for="idade">Idade</label>
+      <input type="number" id="idade" name="idade" required />
+
+      <label for="company">De qual company você é</label>
+      <input type="text" id="company" name="company" required />
+
+      <label for="cargo">Cargo</label>
+      <input type="text" id="cargo" name="cargo" required />
+
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyAenLhQLq4u6MWBR9xXESm4N7mO0LR5_dY",
+        authDomain: "database---sei.firebaseapp.com",
+        projectId: "database---sei",
+        storageBucket: "database---sei.firebasestorage.app",
+        messagingSenderId: "926818948182",
+        appId: "1:926818948182:web:cc3d207aec8a29b8d7d7f7",
+ 
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    document.getElementById('candidaturaForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nick = document.getElementById('nick').value;
+      const idade = document.getElementById('idade').value;
+      const company = document.getElementById('company').value;
+      const cargo = document.getElementById('cargo').value;
+
+      try {
+        await db.collection('candidatos').add({
+          usuario: nick,
+          idade: parseInt(idade),
+          company: company,
+          cargo: cargo,
+          
+        });
+
+        alert("✅ Sua candidatura foi enviada!");
+        document.getElementById('candidaturaForm').reset();
+      } catch (err) {
+        console.error("Erro ao enviar:", err);
+        alert("❌ Ocorreu um erro ao enviar sua candidatura.");
+      }
+    });
+  </script>
+</body>
+</html>

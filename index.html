@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>S.E.I. - Página Inicial</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0f0f0f;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .fade-in {
+      animation: fadeIn 1.2s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .logo-section {
+      background-color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .logo-section img {
+      max-width: 200px;
+      height: auto;
+    }
+
+    .main-content {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .main-content h1 {
+      color: #be3207;
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+      text-shadow: 0 0 10px #be320770;
+    }
+
+    .main-content p {
+      max-width: 700px;
+      margin: 0 auto 40px;
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+
+    .menu-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .menu-toggle {
+      background-color: #1a1a1a;
+      border: 2px solid #be3207;
+      color: white;
+      font-size: 1rem;
+      padding: 15px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+      background-color: #be3207;
+      transform: translateY(-2px);
+    }
+
+    .menu-options {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1a1a1a;
+      border: 2px solid #be3207;
+      border-radius: 10px;
+      min-width: 220px;
+      z-index: 1000;
+    }
+
+    .menu-options button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1rem;
+      border-bottom: 1px solid #333;
+      transition: background 0.2s;
+    }
+
+    .menu-options button:last-child {
+      border-bottom: none;
+    }
+
+    .menu-options button:hover {
+      background-color: #be3207;
+    }
+
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background-color: #111;
+      padding: 30px;
+      border: 1px solid #be3207;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 90%;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .popup-content p {
+      margin-bottom: 20px;
+      color: #ccc;
+    }
+
+    .popup-content a {
+      color: #ff5422;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .popup-content a:hover {
+      text-decoration: underline;
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      background: none;
+      border: 1px solid #be3207;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+
+    @media (max-width: 500px) {
+      .main-content h1 {
+        font-size: 2rem;
+      }
+
+      .menu-options {
+        width: 90%;
+        left: 5%;
+        transform: none;
+      }
+    }
+
+    .floating-phrase {
+      position: fixed;
+      font-size: 0.95rem;
+      color: #ccc;
+      font-family: 'Courier New', Courier, monospace;
+      opacity: 0;
+      pointer-events: none;
+      animation: fadeInOut 6s ease-in-out forwards;
+      z-index: 999;
+      max-width: 300px;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: scale(0.95); }
+      10% { opacity: 1; transform: scale(1); }
+      90% { opacity: 1; }
+      100% { opacity: 0; transform: scale(1.02); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Seção da Logo -->
+  <div class="logo-section fade-in">
+    <img src="agencia.png" alt="Agência S.E.I.">
+  </div>
+
+  <!-- Conteúdo Principal -->
+  <div class="main-content fade-in">
+    <h1>Bem-vindo à Agência S.E.I.</h1>
+    <p>
+      A <strong>S.E.I.</strong> — Serviço Estratégico de Inteligência — atua silenciosamente para monitorar, investigar e neutralizar ameaças de qualquer natureza. Agimos onde ninguém mais pode.
+    </p>
+
+    <!-- Menu Dropdown -->
+    <div class="menu-container">
+      <button class="menu-toggle" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i> Menu
+      </button>
+      <div class="menu-options" id="menuOptions">
+        <button onclick="window.location.href='login.html'">
+          <i class="fas fa-user-lock"></i> Acesso Restrito
+        </button>
+        <button onclick="abrirPopup()">
+          <i class="fas fa-eye-slash"></i> Encontre-nos
+        </button>
+        <button onclick="window.location.href='candidatos.html'">
+          <i class="fas fa-user-plus"></i> Candidatar-se
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup escondido -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <p>Você não pode nos encontrar.<br><strong>Nós encontraremos você.</strong></p>
+      <a href="https://discord.gg/dRQ9hXCEA5" target="_blank">Acesse nosso canal reservado</a>
+      <br>
+      <button class="close-btn" onclick="fecharPopup()">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    function abrirPopup() {
+      document.getElementById("popup").style.display = "flex";
+    }
+
+    function fecharPopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById("menuOptions");
+      menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+    }
+
+    const frases = [
+      "Nós morremos na escuridão para que você possa viver na luz.",
+      "Observamos. Analisamos. Neutralizamos.",
+      "Fundadores: ███████ & █████",
+      "A primeira agência fundada por Vossa Majestade.",
+      "Segurança não é sorte. É vigilância eterna.",
+      "Confidencialidade acima de tudo.",
+      "Respostas nas sombras, proteção na luz.",
+      "Sua paz é nossa missão invisível.",
+    ];
+
+    function criarFraseFlutuante() {
+      const frase = frases[Math.floor(Math.random() * frases.length)];
+      const el = document.createElement("div");
+      el.className = "floating-phrase";
+      el.textContent = frase;
+
+      const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+      const top = Math.random() * (vh - 100) + 20;
+      const left = Math.random() * (vw - 300) + 20;
+
+      el.style.top = `${top}px`;
+      el.style.left = `${left}px`;
+
+      document.body.appendChild(el);
+
+      setTimeout(() => {
+        el.remove();
+      }, 6000);
+    }
+
+    setInterval(criarFraseFlutuante, 7000);
+    criarFraseFlutuante();
+    
+  </script>
+  <!-- 🎵 Música de fundo com controle -->
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
+  <button id="toggleMusic" style="
+    background-color: #1a1a1a;
+    border: 2px solid #be3207;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  ">
+    🔊 Tocar Música
+  </button>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="Audio/succession-intro.mp3" type="audio/mp3">
+  Seu navegador não suporta áudio HTML5.
+</audio>
+
+<script>
+  const music = document.getElementById("bgMusic");
+  const btn = document.getElementById("toggleMusic");
+
+  let tocando = false;
+
+  btn.addEventListener("click", () => {
+    if (tocando) {
+      music.pause();
+      btn.textContent = "🔊 Tocar Música";
+    } else {
+      music.play();
+      btn.textContent = "🎵 Pausar Música";
+    }
+    tocando = !tocando;
+  });
+</script>
+
+
+</body>
+</html>

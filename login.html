@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | Agência S.E.I.</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0f0f0f;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: #be3207;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #be320760;
+      letter-spacing: 1px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .login-box {
+      background-color: #111;
+      padding: 30px;
+      border: 1px solid #be3207;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #be320740;
+      width: 320px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .login-box input {
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #333;
+      border-radius: 6px;
+      background-color: #1a1a1a;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .login-box button {
+      width: 95%;
+      padding: 12px;
+      background-color: #1a1a1a;
+      border: 1px solid #be3207;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .login-box button:hover {
+      background-color: #be3207;
+      transform: translateY(-2px);
+    }
+
+    .login-box a {
+      color: #ff5422;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: block;
+      margin-top: 15px;
+    }
+
+    .login-box a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-text {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 400px) {
+      .login-box {
+        width: 90%;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>ACESSO RESTRITO</h1>
+
+  <div class="login-box">
+    <form id="loginForm" autocomplete="on">
+      <input type="text" id="username" name="username" placeholder="Usuário (Discord)" required />
+      <input type="password" id="password" name="password" placeholder="Senha" required />
+      <button type="submit">ENTRAR</button>
+    </form>
+    <a href="criar_perfil.html">Criar Conta</a>
+    <div class="footer-text">Apenas agentes autorizados podem continuar.</div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
