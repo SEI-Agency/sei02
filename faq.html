@@ -12,6 +12,10 @@
       background-color: #111;
       color: white;
       overflow-x: hidden;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
 
     .topo {
@@ -47,24 +51,53 @@
     .faq-container {
       max-width: 800px;
       margin: 0 auto;
+      text-align: left;
     }
 
     .faq-item {
-      background-color: #1c1c2e;
-      border-radius: 10px;
+      background: linear-gradient(145deg, #1a1a2e, #111122);
+      border-radius: 12px;
+      margin: 15px 0;
       padding: 20px;
-      margin: 20px 0;
-      text-align: left;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
     }
 
-    .faq-item h3 {
+    .faq-item:hover {
+      box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       color: #ffc107;
-      margin-bottom: 10px;
+      font-size: 1.2rem;
     }
 
-    .faq-item p {
+    .faq-answer {
+      margin-top: 15px;
       color: #ddd;
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    .faq-item i {
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.open i {
+      transform: rotate(180deg);
     }
 
     a {
@@ -76,7 +109,6 @@
       text-decoration: underline;
     }
 
-    /* Partículas simuladas (estilo simples) */
     .particle {
       position: absolute;
       width: 4px;
@@ -90,18 +122,8 @@
       0% { transform: translateY(0); }
       100% { transform: translateY(-100vh); }
     }
-
-    /* Segurança básica contra inspeção */
-    body {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
   </style>
   <script>
-    // Bloquear F12 e cliques com o botão direito
     document.addEventListener('keydown', function(e) {
       if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) {
         e.preventDefault();
@@ -115,7 +137,6 @@
       alert("Função desativada.");
     });
 
-    // Geração simples de partículas
     document.addEventListener("DOMContentLoaded", () => {
       const fundo = document.querySelector(".fundo-escuro");
       for (let i = 0; i < 60; i++) {
@@ -126,6 +147,12 @@
         particle.style.animationDuration = (5 + Math.random() * 5) + "s";
         fundo.appendChild(particle);
       }
+
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.addEventListener('click', () => {
+          item.classList.toggle('open');
+        });
+      });
     });
   </script>
 </head>
@@ -139,20 +166,37 @@
 
   <div class="fundo-escuro">
     <div class="faq-container">
+      
       <div class="faq-item">
-        <h3>Posso entrar na S.E.I?</h3>
-        <p>Claro, você pode tentar sua sorte respondendo nosso formulário <a href="candidatos.html">aqui</a>.</p>
+        <div class="faq-question">
+          <span><i class="fas fa-user-shield"></i> Posso entrar na S.E.I?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Claro, você pode tentar sua sorte respondendo nosso formulário <a href="candidatos.html">aqui</a>.</p>
+        </div>
       </div>
 
       <div class="faq-item">
-        <h3>Vocês vão desclassificar operações e missões?</h3>
-        <p>Não, apenas iríamos desclassificar se o governo inteiro fizesse uma votação.</p>
+        <div class="faq-question">
+          <span><i class="fas fa-gavel"></i> Vocês vão desclassificar operações e missões?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Não, apenas iríamos desclassificar se o governo inteiro fizesse uma votação.</p>
+        </div>
       </div>
 
       <div class="faq-item">
-        <h3>Vocês estão investigando alguma pessoa?</h3>
-        <p>Isso é confidencial.</p>
+        <div class="faq-question">
+          <span><i class="fas fa-user-secret"></i> Vocês estão investigando alguma pessoa?</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          <p>Isso é confidencial.</p>
+        </div>
       </div>
+
     </div>
   </div>
 
