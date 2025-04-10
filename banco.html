@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Banco de Dados - S.E.I.</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+  <style>
+    body {
+      background-color: #0c0c0c;
+      color: white;
+      font-family: monospace;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: #e9a12c;
+    }
+    section {
+      border: 1px solid #444;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background-color: #1a1a1a;
+    }
+    button {
+      margin-top: 5px;
+      background-color: #e74c3c;
+      border: none;
+      padding: 5px 10px;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .editar {
+      background-color: #3498db;
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📂 Banco de Dados da S.E.I.</h1>
+
+  <section id="candidatos">
+    <h2>📋 Candidatos</h2>
+    <div id="listaCandidatos"></div>
+  </section>
+
+  <section id="usuarios">
+    <h2>🧑‍💻 Usuários Ativos</h2>
+    <div id="listaUsuarios"></div>
+  </section>
+
+  <section id="loginRequests">
+    <h2>🔐 Solicitações de Login</h2>
+    <div id="listaLoginRequests"></div>
+  </section>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      // 🔐 Sua configuração Firebase aqui
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // 🧾 Carregar Candidatos
+    async function carregarCandidatos() {
+      const querySnapshot = await getDocs(collection(db, "candidatos"));
+      const lista = document.getElementById("listaCandidatos");
+      querySnapshot.forEach((doc) => {
+        const dados = doc.data();
+        lista.innerHTML += `<p><strong>Nick:</strong> ${dados.nick}, <strong>Idade:</strong> ${dados.idade}, <strong>Empresa:</strong> ${dados.company}, <strong>Cargo:</strong> ${dados.cargo}</p>`;
+      });
+    }
+
+    // 👥 Carregar Usuários
+    async function carregarUsuarios() {
+      const querySnapshot = await getDocs(collection(db, "usuarios_aprovacao"));
+      const lista = document.getElementById("listaUsuarios");
+      querySnapshot.forEach((docRef) => {
+        const dados = docRef.data();
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <p><strong>Usuário:</strong> ${dados.usuario} | <strong>Acesso:</strong> ${dados.nivel} | <strong>Chave:</strong> ${dados.chave}</p>
+          <button onclick="excluirUsuario('${docRef.id}')">Excluir</button>
+          <button class="editar" onclick="modificarAcesso('${docRef.id}', '${dados.nivel}')">Modificar Acesso</button>
+        `;
+        lista.appendChild(div);
+      });
+    }
+
+    window.excluirUsuario = async function(id) {
+      await deleteDoc(doc(db, "usuarios", id));
+      location.reload();
+    };
+
+    window.modificarAcesso = async function(id, atual) {
+      const novo = prompt("Novo nível de acesso:", atual);
+      if (novo) {
+        await updateDoc(doc(db, "usuarios", id), { nivel: novo });
+        location.reload();
+      }
+    };
+
+    // 🔒 Carregar Login Requests
+    async function carregarLoginRequests() {
+      const querySnapshot = await getDocs(collection(db, "usuarios_aprovacao"));
+      const lista = document.getElementById("listaLoginRequests");
+      querySnapshot.forEach((docRef) => {
+        const dados = docRef.data();
+        if (!dados.aprovado) {
+          lista.innerHTML += `<p><strong>Usuário:</strong> ${dados.usuario}, <strong>Cargo:</strong> ${dados.cargo}</p>`;
+        }
+      });
+    }
+
+    carregarCandidatos();
+    carregarUsuarios();
+    carregarLoginRequests();
+  </script>
+</body>
+</html>
